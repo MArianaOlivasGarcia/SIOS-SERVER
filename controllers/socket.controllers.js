@@ -48,7 +48,7 @@ const getAllReportsByUserId = async( userId ) => {
     const services = await Services.find({ createdAt: {
         $gte: today.toDate(),
         $lte: moment(today).endOf('day').toDate()
-    }}).populate('report').populate('user')
+    }}).populate('report').populate('assignedTo')
 
 
     return services;
