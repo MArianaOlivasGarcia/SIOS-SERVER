@@ -11,6 +11,11 @@ const ServiceSchema = Schema({
         ref: 'Report',
         required: true
     },
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
     assignedTo: {
         type: Schema.Types.ObjectId,
         ref: 'User'

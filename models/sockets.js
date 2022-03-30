@@ -44,20 +44,22 @@ class Sockets {
             } else if ( role == 'SITE_ROLE' ) {
                 // Si es un chico de servicio, emitir su lista de servicios
                 this.io.to( id ).emit('services-list', await getAllServicesByUserId( id ) )
-            }
-
+            } 
         
             // Escuchar del cliente el reporte (depto-report)
             socket.on('depto-report', async ( payload ) => {
                 // console.log(payload)
                 
                 // Guardar reporte en la base de datos
-                await saveReport( payload );
+                const servicedb = await saveReport( payload );
             
                 // Emitir el reporte al usuario admin (editar report)
 
                 // Emitir el reporte al usuario que emitio pero que sea el user id no department id
                 this.io.to( payload.from ).emit('reports-list', await getAllReportsByUserId( id ) )
+
+                this.io.to( payload.to ).emit('new-service', servicedb )
+
             })
 
 

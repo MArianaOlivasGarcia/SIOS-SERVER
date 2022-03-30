@@ -85,9 +85,10 @@ const saveReport = async( payload ) => {
         const report = new Report( data )
         await report.save();
 
-        const service = new Services( { report } )
+        const service = new Services( { report, user: payload.from } )
         await service.save();
 
+        return service;
 
     } catch(error) {
         console.log(error);
