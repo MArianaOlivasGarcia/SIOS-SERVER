@@ -40,6 +40,7 @@ class Server {
         this.app.use( '/api/users', require('../routes/users.routes') );
         this.app.use( '/api/departments', require('../routes/departments.routes') );
         this.app.use( '/api/reports', require('../routes/reports.routes') );
+        this.app.use( '/api/services', require('../routes/services.routes') );
         this.app.use( '/api/test', require('../routes/test.routes') );
     }
 

@@ -30,6 +30,9 @@ const ServiceSchema = Schema({
         type: String,
         default: 'not-assigned'
     },
+    severity: {
+        type: String
+    },
     // not-assigned, assigned, in-progress , finalized, cancelled, pending
     // sin asignar, asignado, en proceso, finalizado, cancelado, pendiente...
     

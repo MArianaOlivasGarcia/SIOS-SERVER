@@ -51,14 +51,14 @@ class Sockets {
                 // console.log(payload)
                 
                 // Guardar reporte en la base de datos
-                const servicedb = await saveReport( payload );
+                const service = await saveReport( payload );
             
                 // Emitir el reporte al usuario admin (editar report)
 
                 // Emitir el reporte al usuario que emitio pero que sea el user id no department id
                 this.io.to( payload.from ).emit('reports-list', await getAllReportsByUserId( id ) )
 
-                this.io.to( payload.to ).emit('new-service', servicedb )
+                this.io.to( payload.to ).emit('new-service', {...service} )
 
             })
 
