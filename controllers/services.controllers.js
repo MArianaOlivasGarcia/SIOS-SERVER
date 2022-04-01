@@ -21,7 +21,7 @@ const getAllByUserId = async(req, res = response ) => {
         }
 
         //TODO: filtrar que no sean los del dia de hoy
-        const services = await Service.find({user: id})
+        const services = await Service.find({user: id}, '-user').populate('report').populate('assignedTo')
 
         res.status(200).json({
             status: false,
@@ -58,7 +58,7 @@ const getAllByAssignedToId = async(req, res = response ) => {
             })
         }
 
-        const services = await Service.find({assignedTo: id})
+        const services = await Service.find({assignedTo: id}, '-user').populate('report').populate('assignedTo')
 
         res.status(200).json({
             status: false,

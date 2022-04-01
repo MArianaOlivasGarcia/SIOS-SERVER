@@ -54,11 +54,11 @@ class Sockets {
                 const service = await saveReport( payload );
             
                 // Emitir el reporte al usuario admin (editar report)
+                this.io.to( payload.to ).emit('new-service', {...service} )
 
                 // Emitir el reporte al usuario que emitio pero que sea el user id no department id
                 this.io.to( payload.from ).emit('reports-list', await getAllReportsByUserId( id ) )
 
-                this.io.to( payload.to ).emit('new-service', {...service} )
 
             })
 
