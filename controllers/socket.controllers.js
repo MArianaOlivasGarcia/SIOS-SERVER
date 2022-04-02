@@ -48,7 +48,7 @@ const getAllReportsByUserId = async( userId ) => {
     const services = await Services.find({ createdAt: {
         $gte: today.toDate(),
         $lte: moment(today).endOf('day').toDate()
-    }}).populate('report').populate('assignedTo')
+    }}, '-user').populate('report').populate('assignedTo')
 
 
     return services;
@@ -104,7 +104,9 @@ const saveReport = async( payload ) => {
 
 const getAllServicesByUserId = async( userId ) => {
     
-    const services = await Services.find({ assignedTo: userId }).sort({ createdAt: 'asc' });
+    const services = await Services.find({ assignedTo: userId }, '-user -assignedTo')
+    .sort({ createdAt: 'asc' })
+    .populate('report');
     return services;
 
 }

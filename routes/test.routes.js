@@ -17,10 +17,9 @@ router.get('/', async(req, res) => {
     
     try {
 
-        const services = await Services.find({ createdAt: {
-            $gte: today.toDate(),
-            $lte: moment(today).endOf('day').toDate()
-        }}).populate('report').populate('user')
+        const services = await Services.find({ assignedTo: '623e5a9d5516abd648a35230' }, '-user -assignedTo')
+        .sort({ createdAt: 'asc' })
+        .populate('report');
 
         res.status(201).json({
             message: `TESTS`,
