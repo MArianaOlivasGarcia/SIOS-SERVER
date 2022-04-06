@@ -58,7 +58,11 @@ const getAllByAssignedToId = async(req, res = response ) => {
             })
         }
 
-        const services = await Service.find({assignedTo: id}, '-user').populate('report').populate('assignedTo')
+        const services = await Service.find({assignedTo: id}, '-user')
+        .populate('report').populate('assignedTo').populate({
+            path: 'report',
+            populate: { path: 'department'}
+        })
 
         res.status(200).json({
             status: false,

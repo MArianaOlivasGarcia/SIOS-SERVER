@@ -29,7 +29,7 @@ const ServiceSchema = Schema({
     status: {
         type: String,
         default: 'not-assigned'
-    },
+    }, 
     severity: {
         type: String
     },

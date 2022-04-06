@@ -106,7 +106,11 @@ const getAllServicesByUserId = async( userId ) => {
     
     const services = await Services.find({ assignedTo: userId }, '-user -assignedTo')
     .sort({ createdAt: 'asc' })
-    .populate('report');
+    .populate('report')
+    .populate({
+        path: 'report',
+        populate: { path: 'department'}
+    })
     return services;
 
 }
