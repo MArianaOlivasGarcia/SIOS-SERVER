@@ -81,7 +81,45 @@ const getAllByAssignedToId = async(req, res = response ) => {
 }
 
 
+
+// ADMIN
+const getAllByStatus = async(req, res = response ) => { 
+
+    const page = Number(req.query.page) || 1;
+
+    const { status } = req.params;
+
+    try {
+
+
+        const [services, totalResults] = await Promise.all([
+            Service.find({ status }).skip(page-1).limit(20),            
+            Service.countDocuments({ status })
+        ]);
+
+
+        res.status(200).json({
+            status: true,
+            services,
+            totalResults
+        })
+
+
+    } catch( error ) {
+        console.log(error);
+        res.status(500).json({
+            status: false,
+            message: 'Hable con el administrador'
+        })
+    }
+
+
+}
+
+
+
 module.exports = {
     getAllByUserId,
-    getAllByAssignedToId
+    getAllByAssignedToId,
+    getAllByStatus
 }
