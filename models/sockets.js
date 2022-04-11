@@ -1,4 +1,4 @@
-const { saveReport, getAllReportsByUserId, getAllServicesByUserId, userConnected, userDisconnected } = require("../controllers/socket.controllers");
+const { saveReport, getAllReportsByUserId, getAllServicesByUserId, userConnected, userDisconnected, editReport } = require("../controllers/socket.controllers");
 const { comprobarJWT } = require("../helpers/jwt.helper");
 
 
@@ -46,17 +46,33 @@ class Sockets {
                 this.io.to( id ).emit('services-list', await getAllServicesByUserId( id ) )
             } 
         
-            // Escuchar del cliente el reporte (depto-report)
+            // Escuchar del cliente nuevo reporte (depto-report)
             socket.on('depto-report', async ( payload ) => {
                 // console.log(payload)
                 
                 // Guardar reporte en la base de datos
                 const service = await saveReport( payload );
             
-                // Emitir el reporte al usuario admin (editar report)
+                // Emitir el reporte al usuario admin 
                 this.io.to( payload.to ).emit('new-service', {...service} )
 
-                // Emitir el reporte al usuario que emitio pero que sea el user id no department id
+                // Emitir el reporte al usuario que emitio
+                this.io.to( payload.from ).emit('reports-list', await getAllReportsByUserId( id ) )
+
+
+            })
+
+
+            // Escuchar del cliente edit report
+            socket.on('edit-report', async ( payload ) => {
+                // console.log(payload)
+                
+                // Guardar reporte en la base de datos
+                const service = await editReport( payload );
+            
+                // TODO : Emitir el reporte al usuario admin (reporte editado)
+
+                // Emitir el reporte al usuario que emitio
                 this.io.to( payload.from ).emit('reports-list', await getAllReportsByUserId( id ) )
 
 
