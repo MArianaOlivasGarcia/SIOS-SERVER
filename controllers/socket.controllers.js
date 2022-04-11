@@ -113,7 +113,7 @@ const editReport = async( payload ) => {
     try {
 
 
-        
+
         
 
     } catch(error) {
@@ -149,5 +149,6 @@ module.exports = {
     getAllUsers,
     saveReport,
     getAllReportsByUserId,
-    getAllServicesByUserId
+    getAllServicesByUserId,
+    editReport
 }

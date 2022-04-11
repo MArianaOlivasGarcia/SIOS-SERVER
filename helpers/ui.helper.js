@@ -36,7 +36,8 @@ const getCategoriesReport = () => {
         'Internet',
         'Teléfono',
         'Impresora',
-        'Equipo de computo'
+        'Equipo de computo',
+        'Otro'
     ]
 }
 
