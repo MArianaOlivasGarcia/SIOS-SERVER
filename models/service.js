@@ -23,23 +23,39 @@ const ServiceSchema = Schema({
     folio: {
         type: String
     },
-    feedback: {
-        type: String
-    },
     status: {
         type: String,
         default: 'not-assigned'
-    }, 
-    severity: {
-        type: String
     },
     // not-assigned, assigned, in-progress , finalized, cancelled, pending
     // sin asignar, asignado, en proceso, finalizado, cancelado, pendiente...
     
+    feedback: {
+        type: String
+    },
+    description: {
+        type: String
+    },
+    solution: {
+        type: String
+    },
+    device: {
+        type: [String]
+    },
+    staff: {
+        type: [Schema.Types.ObjectId],
+        ref: 'User',
+    },
+
+    // POR EL ADMINSTRADOR
+    severity: { //low, elevated, high, severe
+        type: String
+    },
+
 
     // POR EL USUARIO UNA VEZ FINALIZADO
-    score:{
-        type: String
+    score:{ // 0 al 10
+        type: Number
     },
     comment: {
         type: String

@@ -40,6 +40,41 @@ const getAllByUserId = async(req, res = response ) => {
 }
 
 
+const getById = async(req, res = response ) => {
+
+    try {
+        
+        
+        const { id } = req.params;
+        const service = await Service.findById( id, '-user')
+        .populate('report').populate('assignedTo');
+
+
+        if ( !service ) {
+            res.status(404).json({
+                status: false,
+                message: `No existe un servicio con el ID ${id}`
+            })
+        }
+
+        res.status(200).json({
+            status: false,
+            service
+        })
+
+
+    } catch( error ) {
+        console.log(error);
+        res.status(500).json({
+            status: false,
+            message: 'Hable con el administrador'
+        })
+    }
+
+}
+
+
+
 
 
 const getAllByAssignedToId = async(req, res = response ) => {
@@ -121,5 +156,6 @@ const getAllByStatus = async(req, res = response ) => {
 module.exports = {
     getAllByUserId,
     getAllByAssignedToId,
-    getAllByStatus
+    getAllByStatus,
+    getById
 }
