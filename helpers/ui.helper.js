@@ -33,11 +33,10 @@ const getMenuFrontEnd = ( role = 'user_role' ) => {
 
 const getCategoriesReport = () => {
     return [
-        'Categoria 1',
-        'Categoria 2',
-        'Categoria 3',
-        'Categoria 4',
-        'Categoria 5'
+        'Internet',
+        'Teléfono',
+        'Impresora',
+        'Equipo de computo'
     ]
 }
 

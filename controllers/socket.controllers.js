@@ -99,6 +99,32 @@ const saveReport = async( payload ) => {
 
 
 
+
+const editReport = async( payload ) => {
+
+    /* 
+        {
+            from: '', usuario departamento
+            to: '', usuario admin
+            report: ''
+        } 
+    */
+
+    try {
+
+
+        
+        
+
+    } catch(error) {
+        console.log(error);
+        return false;
+    }
+
+}
+
+
+
 // SERVICIOS
 
 

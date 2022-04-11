@@ -17,14 +17,32 @@ router.get('/', async(req, res) => {
     
     try {
 
-        const services = await Services.find({ assignedTo: '623e5a9d5516abd648a35230' }, '-user -assignedTo')
-        .sort({ createdAt: 'asc' })
-        .populate('report');
+        const service = await Services.findById('624b342674c961e461db6de5')
+       
 
-        res.status(201).json({
-            message: `TESTS`,
-            status: true,
-            services
+        if ( !service ) {
+            return res.status(404).json({
+                status: false,
+                message: `No existe un servicio con el ID ${'624b342674c961e461db6de5'}`
+            })
+        }
+
+        if ( service.status == 'finalized' ) {
+            return res.status(400).json({
+                status: false,
+                message: `No puedes asignar personal a un servicio finalizado.`
+            })
+        }
+
+        if ( service.status == 'assigned' || service.status == 'in-progress' ) {
+            return res.status(400).json({
+                status: false,
+                message: `Ya hay personal trabajando en este reporte, para re asignar debes primero cancelar.`
+            })
+        }
+
+        res.json({
+            service
         })
  
 

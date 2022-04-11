@@ -6,7 +6,12 @@ const User = require('../models/user');
 
 
 
-
+/**
+ * 
+ * 
+ * EDITAR REPORTES
+ * 
+ */
 
 const getAllByRole = async(req, res = response ) => {
 
