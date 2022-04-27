@@ -96,7 +96,36 @@ const update = async(req, res = response ) => {
 }
 
 
+
+const getUsersIsActive = async(req, res = response ) => {
+
+
+    try {
+
+        const users = await User.find({ role: 'SITE_ROLE', isActive: true });           
+
+
+        res.status(200).json({
+            status: true,
+            users
+        })
+
+
+    } catch( error ) {
+        console.log(error);
+        res.status(500).json({
+            status: false,
+            message: 'Hable con el administrador'
+        })
+    }
+
+
+}
+
+
+
 module.exports = {
     getAllByRole,
+    getUsersIsActive,
     update,
 }

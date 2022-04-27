@@ -158,9 +158,45 @@ const getAllByStatus = async(req, res = response ) => {
 
 
 
+
+const getListStatus = async(req, res = response) => {
+
+    const status = [
+        { value: 'not-assigned', name: 'Sin asignar' },
+        { value: 'assigned', name: 'Asignado' },
+        { value: 'in-progress', name: 'En proceso' },
+        { value: 'finalized', name: 'Finalizado' },
+        { value: 'cancelled', name: 'Cancelado' },
+        { value: 'pending', name: 'Pendiente' },
+    ]
+
+    res.json({
+        status
+    })
+}
+
+
+
+const getListSeverities = async(req, res = response) => {
+
+    const severities = [
+        { value: 'low', name: 'Bajo' },
+        { value: 'elevated', name: 'Normal' },
+        { value: 'high', name: 'Alta' },
+        { value: 'severe', name: 'Urgente' },
+    ]
+
+    res.json({
+        severities
+    })
+}
+
+
 module.exports = {
     getAllByUserId,
     getAllByAssignedToId,
     getAllByStatus,
-    getById
+    getById,
+    getListStatus,
+    getListSeverities
 }

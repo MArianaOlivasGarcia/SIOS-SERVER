@@ -1,12 +1,14 @@
 const { Router } = require('express');
-const { getAllByRole, update } = require('../controllers/users.controller');
+const { getAllByRole, update, getUsersIsActive } = require('../controllers/users.controller');
 const { validarADMIN_ROLE, validarJWT } = require('../middlewares/validar-jwt.middleware');
 
 const router = Router();
 
 
-router.get('/all/:role', getAllByRole);
+router.get('/all/active', getUsersIsActive);
 
+
+router.get('/all/:role', getAllByRole);
 
 
 router.put('/update/:id', [

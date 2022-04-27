@@ -133,11 +133,6 @@ const login = async(req, res = response) => {
 }
 
 
-
-
-
-
-
 const renewJWT = async(req, res = response) => {
 
     const id = req.id
@@ -161,8 +156,23 @@ const renewJWT = async(req, res = response) => {
 }
 
 
+const getListRoles = async(req, res = response) => {
+
+    const roles = [
+        { value: 'ADMIN_ROLE', name: 'Administrador' },
+        { value: 'SITE_ROLE', name: 'Cómputo' },
+        { value: 'USER_ROLE', name: 'Departamento' },
+    ]
+
+    res.json({
+        roles
+    })
+}
+
+
 module.exports = {
     register,
     login,
-    renewJWT
+    renewJWT,
+    getListRoles
 }

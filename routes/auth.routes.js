@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
-const { register, login, renewJWT } = require('../controllers/auth.controllers');
+const { register, login, renewJWT, getListRoles } = require('../controllers/auth.controllers');
 const { validarCampos } = require('../middlewares/validar-campos.middleware');
 const { validarJWT, validarADMIN_ROLE } = require('../middlewares/validar-jwt.middleware');
 
@@ -26,6 +26,8 @@ router.post('/register', [
 
 
 router.get('/renew', validarJWT, renewJWT);
+
+router.get('/roles', getListRoles);
 
 
 
