@@ -58,7 +58,7 @@ class Sockets {
 
                 // Emitir el reporte al usuario que emitio
                 this.io.to( payload.from ).emit('reports-list', await getAllReportsByUserId( id ) )
-
+ 
 
             })
 

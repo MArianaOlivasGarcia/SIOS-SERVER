@@ -128,7 +128,7 @@ const getAllByStatus = async(req, res = response ) => {
 
 
         const [services, totalResults] = await Promise.all([
-            Service.find({ status }).skip(page-1).limit(20),            
+            Service.find({ status }).skip((page - 1 )*20).limit(20),            
             Service.countDocuments({ status })
         ]);
 

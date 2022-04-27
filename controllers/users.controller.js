@@ -34,7 +34,7 @@ const getAllByRole = async(req, res = response ) => {
         }
 
         const [users, totalResults] = await Promise.all([
-            User.find({ role: role.toUpperCase() }).skip(page-1).limit(20),            
+            User.find({ role: role.toUpperCase() }).skip((page - 1 )*20).limit(20),            
             User.countDocuments({ role: role.toUpperCase() })
         ]);
 
