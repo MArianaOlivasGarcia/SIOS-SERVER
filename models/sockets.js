@@ -1,4 +1,4 @@
-const { saveReport, getAllReportsByUserId, getAllServicesByUserId, userConnected, userDisconnected, editReport } = require("../controllers/socket.controllers");
+const { saveReport, getAllReportsByUserId, getAllServicesByUserId, userConnected, userDisconnected, editReport, calificarService } = require("../controllers/socket.controllers");
 const { comprobarJWT } = require("../helpers/jwt.helper");
 
 
@@ -72,8 +72,24 @@ class Sockets {
             
                 // TODO : Emitir el reporte al usuario admin (reporte editado)
 
-                // Emitir el reporte al usuario que emitio
+                // Emitir servicios al usuario que emitio
                 this.io.to( payload.from ).emit('reports-list', await getAllReportsByUserId( id ) )
+
+
+            })
+
+
+             // Escuchar del cliente calificar report
+             socket.on('calificar-report', async ( payload ) => {
+                // console.log(payload)
+                
+                // Guardar reporte en la base de datos
+                const service = await calificarService( payload );
+            
+                // TODO : Emitir el reporte al usuario admin (reporte calificado)
+
+                // Emitir servicios al usuario que emitio
+                // this.io.to( payload.from ).emit('reports-list', await getAllReportsByUserId( id ) )
 
 
             })

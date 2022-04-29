@@ -137,6 +137,46 @@ const editReport = async( payload ) => {
 
 
 
+const calificarService = async( payload ) => {
+
+    /* 
+        {
+            from: '', id usuario departamento
+            to: '', id usuario admin
+            service: id servicio
+            grade: {
+                score
+                comment
+            }
+        } 
+    */
+
+    try {
+
+        const { service, grade } = payload;
+
+        const servicedb = await Services.findById( service );
+
+        if ( !servicedb) {
+            return { message: `No existe un servicio con el ID ${ id }` }
+        }
+
+        servicedb.score = grade.score;
+        servicedb.comment = grade.comment;
+
+        await servicedb.save();
+
+        return servicedb;
+        
+
+    } catch(error) {
+        console.log(error);
+        return false;
+    }
+
+}
+
+
 // SERVICIOS
 
 
@@ -162,5 +202,6 @@ module.exports = {
     saveReport,
     getAllReportsByUserId,
     getAllServicesByUserId,
-    editReport
+    editReport,
+    calificarService
 }
