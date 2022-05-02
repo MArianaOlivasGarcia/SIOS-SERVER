@@ -56,7 +56,7 @@ class Sockets {
                 const service = await saveReport( payload );
             
                 // Emitir el reporte al usuario admin 
-                this.io.to( payload.to ).emit('new-service', {...service} )
+                this.io.to( payload.to ).emit('services-all', await getAllServices() )
 
                 // Emitir el reporte al usuario que emitio
                 this.io.to( payload.from ).emit('reports-list', await getAllReportsByUserId( id ) )
