@@ -85,6 +85,9 @@ class Sockets {
                 await assignService( payload );
                 //devolver al admin el listado
                 this.io.to( payload.from ).emit('services-all', await getAllServices() )
+
+                // Emitir al user la lista
+                this.io.to( payload.to ).emit('services-list', await getAllServicesByUserId( payload.to ) )
             })
 
 
