@@ -1,4 +1,4 @@
-const { saveReport, getAllReportsByUserId, getAllServicesByUserId, userConnected, userDisconnected, editReport, calificarService } = require("../controllers/socket.controllers");
+const { saveReport, getAllReportsByUserId, getAllServicesByUserId, userConnected, userDisconnected, editReport, calificarService, getAllServices } = require("../controllers/socket.controllers");
 const { comprobarJWT } = require("../helpers/jwt.helper");
 
 
@@ -44,7 +44,9 @@ class Sockets {
             } else if ( role == 'SITE_ROLE' ) {
                 // Si es un chico de servicio, emitir su lista de servicios
                 this.io.to( id ).emit('services-list', await getAllServicesByUserId( id ) )
-            } 
+            } else {
+                this.io.to( id ).emit('services-all', await getAllServices() )
+            }
         
             // Escuchar del cliente nuevo reporte (depto-report)
             socket.on('depto-report', async ( payload ) => {

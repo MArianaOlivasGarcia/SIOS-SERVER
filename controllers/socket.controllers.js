@@ -195,6 +195,23 @@ const getAllServicesByUserId = async( userId ) => {
 
 
 
+
+
+const getAllServices= async( ) => {
+    
+    const services = await Services.find({ status: 'not-assigned' })
+        .sort({ createdAt: 'asc' })
+        .populate('report')
+        .populate({
+            path: 'report',
+            populate: { path: 'department'}
+        })
+    return services;
+
+}
+
+
+
 module.exports = {
     userConnected,
     userDisconnected,
@@ -203,5 +220,6 @@ module.exports = {
     getAllReportsByUserId,
     getAllServicesByUserId,
     editReport,
-    calificarService
+    calificarService,
+    getAllServices
 }
