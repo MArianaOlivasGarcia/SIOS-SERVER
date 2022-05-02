@@ -1,4 +1,4 @@
-const { saveReport, getAllReportsByUserId, getAllServicesByUserId, userConnected, userDisconnected, editReport, calificarService, getAllServices } = require("../controllers/socket.controllers");
+const { saveReport, getAllReportsByUserId, getAllServicesByUserId, userConnected, userDisconnected, editReport, calificarService, getAllServices, assignService } = require("../controllers/socket.controllers");
 const { comprobarJWT } = require("../helpers/jwt.helper");
 
 
@@ -78,6 +78,13 @@ class Sockets {
                 this.io.to( payload.from ).emit('reports-list', await getAllReportsByUserId( id ) )
 
 
+            })
+
+
+            socket.on('assigned', async ( payload ) => {
+                await assignService( payload );
+                //devolver al admin el listado
+                this.io.to( payload.from ).emit('services-all', await getAllServices() )
             })
 
 

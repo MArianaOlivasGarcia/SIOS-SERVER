@@ -37,7 +37,6 @@ const getAllUsers = async( ) => {
 
 
 
-
 // REPORTES 
 
 const getAllReportsByUserId = async( userId ) => {
@@ -212,6 +211,45 @@ const getAllServices = async( ) => {
 
 
 
+
+const assignService = async ( payload ) => {
+
+    /* 
+        {
+            from: '', id admin
+            to: '', id site
+            service: id servicio,
+            severity: low
+        } 
+    */
+
+        const service = await Services.findById( payload.service );
+
+        if ( !service ) {
+            return { error: `No existe un servicio con el ID ${ payload.service }` }
+        }
+
+        service.status = 'assigned'; 
+        service.assignedTo = payload.to; 
+        service.severity = payload.severity; 
+
+        const report = await Report.findById( service.report );
+
+        if ( !report ) {
+            return { error: `No existe un reporte con el ID ${ payload.report }` }
+        }
+
+        report.isAssigned = true;
+
+        await Promise.all([
+            service.save() ,
+            report.save() 
+        ])
+
+
+}
+
+
 module.exports = {
     userConnected,
     userDisconnected,
@@ -221,5 +259,6 @@ module.exports = {
     getAllServicesByUserId,
     editReport,
     calificarService,
-    getAllServices
+    getAllServices,
+    assignService
 }
