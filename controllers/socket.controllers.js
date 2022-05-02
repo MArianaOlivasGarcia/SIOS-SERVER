@@ -197,10 +197,10 @@ const getAllServicesByUserId = async( userId ) => {
 
 
 
-const getAllServices= async( ) => {
+const getAllServices = async( ) => {
     
     const services = await Services.find({ status: 'not-assigned' })
-        .sort({ createdAt: 'asc' })
+        .sort({ createdAt: 'desc' })
         .populate('report')
         .populate({
             path: 'report',
