@@ -223,10 +223,10 @@ const assignService = async ( payload ) => {
         } 
     */
 
-        const service = await Services.findById( payload.service );
+        const service = await Services.findById( payload.service._id );
 
         if ( !service ) {
-            return { error: `No existe un servicio con el ID ${ payload.service }` }
+            return { error: `No existe un servicio con el ID ${ payload.service._id }` }
         }
 
         service.status = 'assigned'; 
