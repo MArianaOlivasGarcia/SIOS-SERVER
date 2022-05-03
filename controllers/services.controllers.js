@@ -74,9 +74,6 @@ const getById = async(req, res = response ) => {
 }
 
 
-
-
-
 const getAllByAssignedToId = async(req, res = response ) => {
 
     try {
@@ -114,7 +111,6 @@ const getAllByAssignedToId = async(req, res = response ) => {
     }
 
 }
-
 
 
 // ADMIN
@@ -158,7 +154,6 @@ const getAllByStatus = async(req, res = response ) => {
 
 
 
-
 const getListStatus = async(req, res = response) => {
 
     const status = [
@@ -192,11 +187,15 @@ const getListSeverities = async(req, res = response) => {
 }
 
 
+
+
+
 module.exports = {
     getAllByUserId,
     getAllByAssignedToId,
     getAllByStatus,
     getById,
     getListStatus,
-    getListSeverities
+    getListSeverities,
+ 
 }

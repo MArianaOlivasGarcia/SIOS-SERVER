@@ -250,6 +250,37 @@ const assignService = async ( payload ) => {
 }
 
 
+
+const finalizedService = async( payload ) => {
+
+    /*
+    
+        {
+            to: id admin,
+            from: id site,
+            service: {}
+        }
+    
+    */
+
+        
+        const exist = await Services.findById( payload.id );
+
+        if ( !exist ) {
+            return { error: `No existe un servicio con el ID: ${ payload.id }` }
+        }
+
+        const data = {
+            ...payload.service,
+            status: 'finalized'
+        }
+
+        const service = await Services.findByIdAndUpdate( payload.id, data, { new: true });
+
+        return service;
+
+}
+
 module.exports = {
     userConnected,
     userDisconnected,
@@ -260,5 +291,6 @@ module.exports = {
     editReport,
     calificarService,
     getAllServices,
-    assignService
+    assignService,
+    finalizedService
 }
