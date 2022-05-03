@@ -111,18 +111,18 @@ const editReport = async( payload ) => {
 
     try {
 
-        const { _id: id } = payload.report;
+        const { report } = payload;
 
-        const doesExist = await Report.findById( id );
+        const doesExist = await Report.findById( report._id );
 
         if ( !doesExist) {
-            return { message: `No existe un reporte con el ID ${ id }` }
+            return { message: `No existe un reporte con el ID ${ report._id  }` }
         }
 
 
-        await Report.findByIdAndUpdate( id, payload.report, { new: true })
+        await Report.findByIdAndUpdate( report._id , payload.report, { new: true })
 
-        const service = await Services.findOne({ report: id })
+        const service = await Services.findOne({ report: report._id  })
 
         return service;
         
