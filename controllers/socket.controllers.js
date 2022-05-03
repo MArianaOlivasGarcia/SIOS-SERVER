@@ -142,7 +142,7 @@ const calificarService = async( payload ) => {
         {
             from: '', id usuario departamento
             to: '', id usuario admin
-            service: id servicio
+            service: 
             grade: {
                 score
                 comment
@@ -154,10 +154,10 @@ const calificarService = async( payload ) => {
 
         const { service, grade } = payload;
 
-        const servicedb = await Services.findById( service );
+        const servicedb = await Services.findById( service._id );
 
         if ( !servicedb) {
-            return { message: `No existe un servicio con el ID ${ id }` }
+            return { message: `No existe un servicio con el ID ${ service._id }` }
         }
 
         servicedb.score = grade.score;
