@@ -236,7 +236,7 @@ const assignService = async ( payload ) => {
         const report = await Report.findById( service.report );
 
         if ( !report ) {
-            return { error: `No existe un reporte con el ID ${ payload.report }` }
+            return { error: `No existe un reporte con el ID ${ service.report }` }
         }
 
         report.isAssigned = true;
@@ -245,6 +245,8 @@ const assignService = async ( payload ) => {
             service.save() ,
             report.save() 
         ])
+
+        return service;
 
 
 }

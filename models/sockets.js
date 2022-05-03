@@ -82,7 +82,8 @@ class Sockets {
 
 
             socket.on('assigned', async ( payload ) => {
-                await assignService( payload );
+                const service = await assignService( payload );
+                console.log(service)
                 //devolver al admin el listado
                 this.io.to( payload.from ).emit('services-all', await getAllServices() )
 
