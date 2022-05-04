@@ -6,6 +6,7 @@ const Services = require('../models/service');
 
 const today = moment().startOf('day')
 
+const mongoose = require('mongoose');
 
 const userConnected = async( id ) => {
 
@@ -142,7 +143,7 @@ const calificarService = async( payload ) => {
         {
             from: '', id usuario departamento
             to: '', id usuario admin
-            service: 
+            service: id servicio
             grade: {
                 score
                 comment
@@ -154,10 +155,12 @@ const calificarService = async( payload ) => {
 
         const { service, grade } = payload;
 
-        const servicedb = await Services.findById( service._id );
+        const id = mongoose.Types.ObjectId(service);
+
+        const servicedb = await Services.findById( id );
 
         if ( !servicedb) {
-            return { message: `No existe un servicio con el ID ${ service._id }` }
+            return { message: `No existe un servicio con el ID ${ id }` }
         }
 
         servicedb.score = grade.score;
