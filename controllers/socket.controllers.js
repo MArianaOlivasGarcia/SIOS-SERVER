@@ -286,6 +286,37 @@ const finalizedService = async( payload ) => {
 
 }
 
+
+
+const getAdminRole = async() => {
+    
+    const admin = await User.findOne({ role: 'ADMIN_ROLE'})
+
+    return admin;
+
+}
+
+
+
+const initService = async ( payload ) => {
+    /**
+     *
+     * 
+     * from : id site
+     * to: id user depto
+     * service: id service
+     */
+    const id = mongoose.Types.ObjectId( payload.service );
+
+    const service = await Services.findById( id );
+
+    service.status = 'in-progress';
+
+    await service.save();
+
+
+}
+
 module.exports = {
     userConnected,
     userDisconnected,
@@ -297,5 +328,7 @@ module.exports = {
     calificarService,
     getAllServices,
     assignService,
-    finalizedService
+    finalizedService,
+    getAdminRole,
+    initService
 }
