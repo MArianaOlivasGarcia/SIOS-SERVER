@@ -47,7 +47,9 @@ const getById = async(req, res = response ) => {
         
         const { id } = req.params;
         const service = await Service.findById( id, '-user')
-        .populate('report').populate('assignedTo');
+                .populate('report')
+                .populate('assignedTo')
+                .populate('user')
 
 
         if ( !service ) {
