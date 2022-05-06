@@ -46,7 +46,7 @@ const getById = async(req, res = response ) => {
         
         
         const { id } = req.params;
-        const service = await Service.findById( id, '-user')
+        const service = await Service.findById( id )
                 .populate('report')
                 .populate('assignedTo')
                 .populate('user')
