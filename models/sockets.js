@@ -115,7 +115,7 @@ class Sockets {
                 const admin = await getAdminRole()
 
 
-                await initService();
+                await initService( payload );
 
                  //devolver al admin el listado
                  this.io.to( admin._id ).emit('services-all', await getAllServices() )
