@@ -306,6 +306,9 @@ const initService = async ( payload ) => {
      * to: id user depto
      * service: id service
      */
+
+    console.log('ESTE ES EL PAYLOAD')
+    console.log({payload})
     const id = mongoose.Types.ObjectId( payload.service );
 
     const service = await Services.findById( id );
