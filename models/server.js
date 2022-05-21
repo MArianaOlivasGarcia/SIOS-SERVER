@@ -42,6 +42,7 @@ class Server {
         this.app.use( '/api/reports', require('../routes/reports.routes') );
         this.app.use( '/api/services', require('../routes/services.routes') );
         this.app.use( '/api/periods', require('../routes/periods.routes') );
+        this.app.use( '/api/search', require('../routes/search.routes') );
         this.app.use( '/api/test', require('../routes/test.routes') );
     }
 
