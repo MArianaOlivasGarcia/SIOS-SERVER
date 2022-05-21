@@ -61,6 +61,10 @@ const getById = async(req, res = response ) => {
         const service = await Service.findById( id )
                 .populate('report')
                 .populate('assignedTo')
+                .populate({
+                    path: 'report',
+                    populate: { path: 'department'}
+                })
                 .populate('user')
 
 
