@@ -4,11 +4,12 @@ const { response } = require('express');
 const Service = require('../models/service');
 const User = require('../models/user');
 
+
 const getAllByUserId = async(req, res = response ) => {
 
     try {
-        
-        
+        const page = Number(req.query.page) || 1;
+
         const { id } = req.params;
         const doesExist = await User.findById( id );
 
@@ -20,12 +21,23 @@ const getAllByUserId = async(req, res = response ) => {
             })
         }
 
-        //TODO: filtrar que no sean los del dia de hoy
-        const services = await Service.find({user: id}, '-user').populate('report').populate('assignedTo')
+        //$eq: filtrar que sea igual
+        //$lt: filtrar sea menor 
+        //$gte: filtrar sea mayo o igual 
+
+        const [services, totalResults] = await Promise.all([
+            Service.find({user: id, createdAt: {$lt: Date.now() }}, '-user')
+                .populate('report')
+                .populate('assignedTo')
+                .skip((page - 1 )*20)
+                .limit(20),
+            Service.countDocuments({user: id, createdAt: {$lt: Date.now() }})
+        ])
 
         res.status(200).json({
-            status: false,
-            services
+            status: true,
+            services,
+            totalResults
         })
 
 
@@ -60,7 +72,7 @@ const getById = async(req, res = response ) => {
         }
 
         res.status(200).json({
-            status: false,
+            status: true,
             service
         })
 
@@ -80,6 +92,9 @@ const getAllByAssignedToId = async(req, res = response ) => {
 
     try {
         
+        const page = Number(req.query.page) || 1;
+
+
         const { id } = req.params;
 
         const doesExist = await User.findById( id );
@@ -92,15 +107,24 @@ const getAllByAssignedToId = async(req, res = response ) => {
             })
         }
 
-        const services = await Service.find({assignedTo: id}, '-user')
-        .populate('report').populate('assignedTo').populate({
-            path: 'report',
-            populate: { path: 'department'}
-        })
+        const [services, totalResults] = await Promise.all([
+            Service.find({assignedTo: id}, '-user')
+                .populate('report')
+                .populate('assignedTo')
+                .populate({
+                    path: 'report',
+                    populate: { path: 'department'}
+                })
+                .skip((page - 1 )*20)
+                .limit(20),
+            Service.countDocuments({assignedTo: id})
+        ])
+
 
         res.status(200).json({
             status: false,
-            services
+            services,
+            totalResults
         })
 
 
@@ -192,6 +216,86 @@ const getListSeverities = async(req, res = response) => {
 
 
 
+
+const getBitacora = async ( req, res ) => {
+
+
+    const page = Number(req.query.page) || 1;
+
+
+    try {
+
+
+        const [bitacora, totalResults] = await Promise.all([
+            Service.find({ status: 'finalized' }, 'description solution')
+                .skip((page - 1 )*20)
+                .limit(20),  
+            Service.countDocuments({ status: 'finalized'  })
+        ]);
+
+
+        res.status(200).json({
+            status: true,
+            bitacora,
+            totalResults
+        })
+
+
+    } catch( error ) {
+        console.log(error);
+        res.status(500).json({
+            status: false,
+            message: 'Hable con el administrador'
+        })
+    }
+
+
+
+}
+
+
+
+
+
+const getScores = async ( req, res ) => {
+
+
+    const page = Number(req.query.page) || 1;
+
+
+    try {
+
+
+        const [bitacora, totalResults] = await Promise.all([
+            Service.find({ status: 'finalized' }, 'score comment')
+                .skip((page - 1 )*20)
+                .limit(20),  
+            Service.countDocuments({ status: 'finalized'  })
+        ]);
+
+
+        res.status(200).json({
+            status: true,
+            bitacora,
+            totalResults
+        })
+
+
+    } catch( error ) {
+        console.log(error);
+        res.status(500).json({
+            status: false,
+            message: 'Hable con el administrador'
+        })
+    }
+
+
+
+}
+
+
+
+
 module.exports = {
     getAllByUserId,
     getAllByAssignedToId,
@@ -199,5 +303,6 @@ module.exports = {
     getById,
     getListStatus,
     getListSeverities,
- 
+    getBitacora,
+    getScores
 }

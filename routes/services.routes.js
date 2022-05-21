@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { getAllByUserId, getAllByAssignedToId, getAllByStatus, getById, getListStatus, getListSeverities } = require('../controllers/services.controllers');
+const { getAllByUserId, getAllByAssignedToId, getAllByStatus, getById, getListStatus, getListSeverities, getBitacora, getScores } = require('../controllers/services.controllers');
 const { validarJWT, validarADMIN_ROLE } = require('../middlewares/validar-jwt.middleware');
 
 const router = Router();
@@ -8,6 +8,10 @@ const router = Router();
 router.get('/severity', getListSeverities);
 
 router.get('/status', getListStatus);
+
+router.get('/bitacora', getBitacora);
+
+router.get('/scores', getScores);
 
 router.get('/:id', [ validarJWT ], getById);
 

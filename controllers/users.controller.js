@@ -3,6 +3,7 @@
 
 const { response } = require('express');
 const User = require('../models/user');
+const Department = require('../models/department');
 
 
 
@@ -125,6 +126,86 @@ const getUsersIsActive = async(req, res = response ) => {
 
 
 
+const getUsersWithoutDepartment = async(req, res = response ) => {
+
+
+    try {
+
+        const usersdb = await User.find({ role: 'USER_ROLE' });   
+        
+        
+        let users = [];
+
+
+        for (let i = 0; i < usersdb.length; i++) {
+            
+            const hasDepartent = await Department.findOne({user: usersdb[i].id})
+
+            if ( !hasDepartent ) {
+                users.push(usersdb[i]);
+            }
+
+        }
+
+
+
+        res.status(200).json({
+            status: true,
+            users
+        })
+
+
+    } catch( error ) {
+        console.log(error);
+        res.status(500).json({
+            status: false,
+            message: 'Hable con el administrador'
+        })
+    }
+
+
+}
+
+
+
+
+const changeIsActive = async(req, res = response ) => {
+
+
+    const { id } = req.params
+
+    try {
+
+        const user = await User.findById( id );
+
+        if ( !user) {
+            return res.status(400).json({
+                status: false,
+                message: `No existe un usuario con el ID ${ id }.`
+            })
+        }
+
+
+        user.isActive = !user.isActive;
+        await user.save();
+        
+
+        res.status(201).json({
+            message: `Usuario editado con éxito`,
+            status: true,
+            user
+        })
+
+
+    } catch( error ) {
+        console.log(error);
+        res.status(500).json({
+            status: false,
+            message: 'Hable con el administrador'
+        })
+    }
+
+}
 
 
 
@@ -132,4 +213,6 @@ module.exports = {
     getAllByRole,
     getUsersIsActive,
     update,
+    getUsersWithoutDepartment,
+    changeIsActive
 }
