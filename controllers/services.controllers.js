@@ -112,7 +112,8 @@ const getAllByAssignedToId = async(req, res = response ) => {
         }
 
         const [services, totalResults] = await Promise.all([
-            Service.find({assignedTo: id}, '-user')
+            Service.find({assignedTo: id})
+                .populate('user')
                 .populate('report')
                 .populate('assignedTo')
                 .populate({
