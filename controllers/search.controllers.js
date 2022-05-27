@@ -8,7 +8,7 @@ const searchBitacora = async(req, res = response) => {
     const regex = new RegExp( query, 'i')
 
     const [ bitacora ] = await Promise.all([
-        Service.find( { $or: [{description: regex },{solution: regex}]} )
+        Service.find( { $or: [{description: regex },{solution: regex}]}, 'description solution' )
     ])
 
     res.json({
