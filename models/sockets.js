@@ -28,7 +28,6 @@ class Sockets {
         this.io.on('connection', async ( socket ) => {
         
             console.log('TOKEN')
-            console.log(socket)
             console.log(socket.handshake.query['accessToken'])
             // Validar que el token sea valido
             const [ valid, id, role ] = comprobarJWT( socket.handshake.query['accessToken'] )
