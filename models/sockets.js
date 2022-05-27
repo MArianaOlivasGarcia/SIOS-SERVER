@@ -29,6 +29,9 @@ class Sockets {
         
             console.log('TOKEN')
             console.log(socket.handshake.query['accessToken'])
+
+            console.log('QUERY')
+            console.log(socket.handshake.query)
             // Validar que el token sea valido
             const [ valid, id, role ] = comprobarJWT( socket.handshake.query['accessToken'] )
 
